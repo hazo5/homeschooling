@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> دردشة الطلاب -هوم سكولينج</title>
+    <link rel="icon" href="الشعر النهائي.png">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            direction: ltr; /* اتجاه من اليسار لليمين */
+            background-color: #f4f4f4;
+            color: #333;
+        }
+        
+        .blorpt {
+            width: 250px;
+            background-color: #333;
+            color: #fff;
+            height: 100vh;
+            position: fixed;
+            top: 0;
+            left: 0;
+            transform: translateX(-250px);
+            transition: transform 0.3s ease;
+            z-index: 1001;
+        }
+        
+        .blorpt.active {
+            transform: translateX(0);
+        }
+        
+        .blorpt ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        
+        .blorpt ul li {
+            margin: 0;
+        }
+        
+        .blorpt ul li a {
+            display: block;
+            padding: 15px;
+            text-decoration: none;
+            color: #fff;
+            font-weight: bold;
+        }
+        
+        .blorpt ul li a:hover {
+            background-color: #555;
+        }
+        
+        .qux {
+            position: fixed;
+            top: 10px;
+            left: 10px;
+            background-color: #333;
+            color: #fff;
+            padding: 10px;
+            cursor: pointer;
+            z-index: 1000;
+            border-radius: 5px;
+        }
+        
+        .qux .baz {
+            display: block;
+            width: 25px;
+            height: 3px;
+            background-color: #fff;
+            margin: 5px 0;
+        }
+        
+        .close-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: #ff0000;
+            color: #fff;
+            padding: 10px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        
+        .close-btn:hover {
+            background-color: #cc0000;
+        }
+        
+        .chat-box,
+        .input-container {
+            position: absolute;
+            left: 15%; /* تحديد المسافة من اليسار */
+            width: 70%; /* تحديد العرض المناسب */
+        }
+        
+        .chat-box {
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            top: 10%; /* تحديد المسافة من الأعلى */
+            bottom: 15%; /* تحديد المسافة من الأسفل */
+            overflow-y: auto;
+            direction: ltr; /* اتجاه النص من اليسار لليمين */
+        }
+        
+        .chat-message {
+            margin-bottom: 15px;
+            display: flex;
+            justify-content: flex-start; /* تغيير الترتيب ليتناسب مع اتجاه النص */
+        }
+        
+        .chat-message .message-content {
+            background-color: #007bff;
+            color: #fff;
+            padding: 10px;
+            border-radius: 8px;
+            max-width: 70%;
+        }
+        
+        .message-content .name {
+            font-weight: bold;
+        }
+        
+        .message-content .text {
+            margin-top: 5px;
+        }
+        
+        .input-container {
+            display: flex;
+            margin-top: 20px;
+            bottom: 10%; /* تحديد المسافة من الأسفل */
+        }
+        
+        .input-container input[type="text"] {
+            flex-grow: 1;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            margin-right: 10px;
+        }
+        
+        .input-container button {
+            padding: 10px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        
+        .input-container button:hover {
+            background-color: #0056b3;
+        }
+        
+        .popup-container {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            padding: 20px;
+            z-index: 1002;
+            width: 80%;
+            max-width: 400px;
+        }
+        
+        .popup-container.active {
+            display: block;
+        }
+        
+        .popup-container input[type="text"] {
+            width: calc(100% - 22px);
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            margin-bottom: 10px;
+        }
+        
+        .popup-container button {
+            padding: 10px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        
+        .popup-container button:hover {
+            background-color: #0056b3;
+        }
+        
+        @media (max-width: 768px) {
+            .blorpt {
+                width: 200px;
+                transform: translateX(-200px);
+            }
+        
+            .chat-box,
+            .input-container {
+                width: 80%; /* تعديل العرض لتناسب الشاشات الصغيرة */
+                left: 10%; /* تعديل المسافة من اليسار لتتناسب مع العرض الجديد */
+            }
+        
+            .chat-box {
+                padding: 15px;
+            }
+        
+            .input-container input[type="text"] {
+                padding: 8px;
+                margin-right: 8px;
+            }
+        
+            .input-container button {
+                padding: 8px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .blorpt {
+                width: 150px;
+                transform: translateX(-150px);
+            }
+        
+            .chat-box,
+            .input-container {
+                width: 90%; /* تعديل العرض لتناسب الشاشات الأصغر */
+                left: 5%; /* تعديل المسافة من اليسار لتناسب العرض الأصغر */
+            }
+        
+            .chat-box {
+                padding: 10px;
+                top: 5%;
+                bottom: 10%;
+            }
+        
+            .input-container {
+                margin-top: 10px;
+                bottom: 5%;
+            }
+        
+            .chat-message {
+                font-size: 14px; /* تصغير حجم الخط ليتناسب مع الشاشات الصغيرة */
+            }
+        
+            .input-container input[type="text"] {
+                padding: 6px;
+                margin-right: 6px;
+            }
+        
+            .input-container button {
+                padding: 6px;
+            }
+        }
+        
+    </style>
+</head>
+<body>
+    <div class="qux" id="menuToggle">
+        <div class="baz"></div>
+        <div class="baz"></div>
+        <div class="baz"></div>
+    </div>
+
+    <div class="blorpt" id="sidebar">
+        <div class="close-btn" id="closeSidebar">×</div> <!-- زر إغلاق الشريط الجانبي -->
+        <ul>
+            <li><a href="login.html">.........أسأل معلمك</a></li>
+            <li><a href="main.html">الرئيسية</a></li>
+            <li><a href="chat.html">غرف الدردشة</a></li>
+            <li><a href="videos.html">الفيديوهات التعليمية</a></li>
+            <li><a href="teachers.html">مكتبة شروحات المعلمين</a></li>
+            <li><a href="web.html">عن صانع الموقع</a></li>
+            <li><a href="calculator.html">الآلة الحاسبة</a></li>
+            <li><a href="grade_calculator.html">الألعاب</a></li>
+            <li><a href="library.html">المكتبة</a></li>
+            <li><a href="vip chat.html">غرف دردشة خاصة <img src="vip.png" alt=""></a></li>
+            <li><a href="vip_login.html">المعلم الذكي <img src="vip.png" alt=""></a></li>
+        </ul>
+    </div>
+
+    <div class="chat-container">
+        <div class="chat-box" id="chatBox">
+            <!-- الرسائل ستظهر هنا -->
+        </div>
+
+        <div class="input-container">
+            <input type="text" id="userName" placeholder="اكتب اسمك...">
+            <input type="text" id="userMessage" placeholder="اكتب رسالتك...">
+            <button onclick="sendMessage()" 
+            style="position: absolute; left:50%; top:63%;">
+            إرسال</button>
+        </div>
+    </div>
+    <button style="position: absolute;
+    left:35%;" class=".input-container button">
+    رسالة :undefined هي رسالة غير معرفة
+</button>
+    <script>
+        let intervalId;
+
+function startAutoRefresh() {
+    intervalId = setInterval(function() {
+        location.reload();
+    }, 1000); 
+}
+
+function stopAutoRefresh() {
+    clearInterval(intervalId);
+}
+
+document.getElementById('menuToggle').addEventListener('click', function() {
+    const sidebar = document.getElementById('sidebar');
+    sidebar.classList.toggle('active');
+});
+
+document.getElementById('closeSidebar').addEventListener('click', function() {
+    const sidebar = document.getElementById('sidebar');
+    sidebar.classList.remove('active');
+});
+
+window.onload = function() {
+    loadMessages(); // تحميل الرسائل عند تحميل الصفحة
+    startAutoRefresh(); 
+};
+
+function sendMessage() {
+    var pl1 = document.getElementById('userName').value; // اسم المستخدم
+    var cct = document.getElementById('userMessage').value; // الرسالة
+    if (pl1.trim() === '' || cct.trim() === '') {
+        alert('الرجاء إدخال اسمك ورسالتك.');
+        return;
+    }
+
+    var chatBox = document.getElementById('chatBox');
+    var chatMessage = document.createElement('div');
+    chatMessage.className = 'chat-message';
+    chatMessage.innerHTML = `
+        <div class="message-content">
+            <div class="name">${pl1}</div>
+            <div class="text">${cct}</div>
+        </div>
+    `;
+    chatBox.appendChild(chatMessage);
+
+    saveMessages(); // تأكد من حفظ الرسائل
+
+    document.getElementById('userName').value = '';
+    document.getElementById('userMessage').value = '';
+
+    chatBox.scrollTop = chatBox.scrollHeight;
+
+    startAutoRefresh();
+}
+
+function saveMessages() {
+    var chatBox = document.getElementById('chatBox');
+    var messages = [];
+    var chatMessages = chatBox.querySelectorAll('.chat-message');
+    chatMessages.forEach(function(chatMessage) {
+        var pl1 = chatMessage.querySelector('.name').innerText;
+        var cct = chatMessage.querySelector('.text').innerText;
+        messages.push({ pl1: pl1, cct: cct });
+    });
+    localStorage.setItem('chatMessages', JSON.stringify(messages)); // استخدم مفتاح ثابت هنا
+}
+
+function loadMessages() {
+    var savedMessages = localStorage.getItem('chatMessages'); // استخدم نفس المفتاح
+    if (savedMessages) {
+        var messages = JSON.parse(savedMessages);
+        var chatBox = document.getElementById('chatBox');
+        messages.forEach(function(msg) {
+            var chatMessage = document.createElement('div');
+            chatMessage.className = 'chat-message';
+            chatMessage.innerHTML = `
+                <div class="message-content">
+                    <div class="name">${msg.pl1}</div>
+                    <div class="text">${msg.cct}</div>
+                </div>
+            `;
+            chatBox.appendChild(chatMessage);
+        });
+    }
+}
+
+const inputFields = document.querySelectorAll('.input-container input');
+inputFields.forEach(field => {
+    field.addEventListener('focus', stopAutoRefresh);
+    field.addEventListener('blur', startAutoRefresh);
+});
+
+    </script>
+</body>
+</html>

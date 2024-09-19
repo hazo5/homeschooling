@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>الحقق من هويتك للدردشة الخاصة</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        form {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 300px;
+        }
+        h2 {
+            margin-bottom: 20px;
+            font-size: 24px;
+            text-align: center;
+            color: #333;
+        }
+        label {
+            font-size: 16px;
+            color: #555;
+        }
+        input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            margin-top: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        input[type="submit"] {
+            width: 100%;
+            padding: 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        input[type="submit"]:hover {
+            background-color: #45a049;
+        }
+    </style>
+    
+</head>
+<body>
+    <form onsubmit="checkCode(event)">
+        <h2>تسجيل الدخول</h2>
+        <label for="code">أدخل الكود:</label>
+        <input type="text" id="code" name="code">
+        <input type="submit" value="تسجيل الدخول">
+    </form>
+    <script>
+        function checkCode(event) {
+            event.preventDefault();
+            // الأكواد الصحيحة المأخوذة من أول 3 حروف من كلمات المرور
+            const validCodes = 
+           ["A7B", "B9F", "C4D", 
+            "T3Z", "L8Q", "H4P", 
+            "R9C", "N6F", "K7W", 
+            "Q8V", "D2X", "L2N", 
+            "B1C", "F4J", "F4R", 
+            "S8G", "M5K", "K7L", 
+            "N2W", "Y1L", "V6K", 
+            "L4K", "X9Q", "N2C", 
+            "P3N", "M3T", "J1K", 
+            "Z9Y", "D9L", "F7J", 
+            "G7R", "K5Q", "K2W", 
+            "P2N", "T8X", "X3G", 
+            "V3S", "C9S", "Q7H", 
+            "M7Y", "Y9G", "L2H", 
+            "P2L", "R3J", "W6F"];
+            
+            const userCode = document.getElementById('code').value;
+
+            if (validCodes.includes(userCode)) {
+                window.location.href = "smart _vip.html";
+            } else {
+                alert("الكود غير صحيح. حاول مرة أخرى, إذا لم تكن قد أشتريت نظام الدردشة فيجب عليك الشراء وطريقة الشراء موجودة في البطاقة الخاصة بك");
+            }
+        }
+    </script>
+</body>
+</html>

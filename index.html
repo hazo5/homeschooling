@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>هوم سكولينج - منصة التعليم المنزلي</title>
+    <style>
+        body {
+            font-family: 'Cairo', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f9f9f9;
+            color: #000000;
+            direction: rtl;
+        }
+
+        header {
+            background: linear-gradient(to right, #00d800, #94ffa3);
+            text-align: center;
+            padding: 20px;
+            color: rgb(0, 0, 0);
+            font-size: 25px;
+        }
+
+        h1 {
+            margin: 0;
+            font-size: 3rem;
+        }
+
+        /* Slider Styling */
+        .slider {
+            position: relative;
+            max-width: 100%;
+            height: 400px;
+            overflow: hidden;
+        }
+
+        .slider img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            position: absolute;
+            top: 0;
+            right: -100%;
+            transition: right 1s ease-in-out;
+        }
+
+        /* Buttons for next/previous */
+        .btn-arrow {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            padding: 10px;
+            background-color: rgba(0, 0, 0, 0.5);
+            color: white;
+            font-size: 2rem;
+            border: none;
+            cursor: pointer;
+            z-index: 10;
+        }
+
+        .btn-right {
+            right: 10px;
+        }
+
+        .btn-left {
+            left: 10px;
+        }
+
+        /* Button and Content Styling */
+        .content {
+            padding: 40px 20px;
+            text-align: center;
+        }
+
+        .btn-login {
+            display: inline-block;
+            padding: 15px 30px;
+            background-color: #84ff8e;
+            color: rgb(0, 0, 0);
+            text-decoration: none;
+            font-size: 1.2rem;
+            border-radius: 50px;
+            transition: background-color 0.3s ease;
+            margin-bottom: 40px;
+            box-shadow: 0px 4px 15px rgba(37, 117, 252, 0.4);
+        }
+
+        .btn-login:hover {
+            background-color: #1a5bbf;
+            color: #ffffff;
+        }
+
+        article {
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            max-width: 900px;
+            margin: 0 auto 40px;
+            text-align: right;
+            font-size: 1.1rem;
+            line-height: 1.8;
+        }
+
+        /* Social Links Styling */
+        .social-links {
+            margin-top: 20px;
+        }
+
+        .social-links a {
+            margin: 0 15px;
+            color: #2575fc;
+            font-size: 1.5rem;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .social-links a:hover {
+            color: #6a11cb;
+        }
+
+        /* Footer */
+        footer {
+            background-color: #333;
+            color: white;
+            padding: 20px 0;
+            text-align: center;
+            margin-top: 40px;
+        }
+        .fubar {
+            display: flex;
+            flex-direction: row; /* لجعل العنصر أفقيًا */
+        }
+
+        .blorpt {
+            width: 250px;
+            background-color: #333;
+            color: #fff;
+            height: 100vh; /* ارتفاع 100% من ارتفاع الشاشة */
+            position: fixed;
+            top: 0;
+            left: 0;
+            transform: translateX(-250px); /* إخفاء الشريط الجانبي */
+            transition: transform 0.3s ease;
+            z-index: 1001;
+        }
+
+        .blorpt.active {
+            transform: translateX(0); /* إظهار الشريط الجانبي */
+        }
+
+        .blorpt ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .blorpt ul li {
+            margin: 0;
+        }
+
+        .blorpt ul li a {
+            display: block;
+            padding: 15px;
+            text-decoration: none;
+            color: #fff;
+            font-weight: bold;
+        }
+
+        .blorpt ul li a:hover {
+            background-color: #555;
+        }
+
+        .qux {
+            position: fixed;
+            top: 10px;
+            left: 10px;
+            background-color: #333;
+            color: #fff;
+            padding: 10px;
+            cursor: pointer;
+            z-index: 1000;
+            border-radius: 5px;
+        }
+
+        .qux .baz {
+            display: block;
+            width: 25px;
+            height: 3px;
+            background-color: #fff;
+            margin: 5px 0;
+        }
+        .x{
+            color: #ff0000;
+            background-color: #fff;
+            position: absolute;
+            left: 0px; 
+            top: 640px;
+            border-radius: 2px;
+            height: 28px;
+            width: 10px;
+            border: #e0e0e0;
+            border-style: dotted;
+        }
+        .x:hover{
+            color: #f9f9f9;
+            background-color: #ff0000;
+            cursor: pointer;
+            border: #e100ff;
+            border-style: solid;
+        }
+
+        .head_of_special_users{
+            position: fixed;
+            position: absolute;
+            top:134%;
+            left: 82%;
+            height: 60px;
+            width: 68px;
+        }
+        .paddle1{
+            display: fixed;
+            position: fixed;
+            position: absolute;
+            left: 75%;
+            top: 140%;
+            background: linear-gradient(to right, #d800c6, #8401ff);
+            border-radius: 5px;
+            font-size: medium;
+            height: 30px;
+            width: 180px;
+            padding-left: 5px;
+            padding-right: 5px;
+            margin-top: 5px;
+        }
+        .paddle2{
+            display: fixed;
+            position: fixed;
+            position: absolute;
+            left: 75%;
+            top: 145%;
+            background: white;
+            border-radius: 5px;
+            font-size: medium;
+            height: 230px;
+            width: 180px;
+            border: #e0e0e0;
+            border-style: dashed;
+        }
+        .users_name{
+            position: absolute;
+            top: 40%;
+            left: 35%;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <p>منصة التعليم المنزلي - هوم سكولينج</p>
+    </header>
+
+    <div class="special_users" hidden>
+        <img src="vip.png" alt="" class="head_of_special_users">
+        <div class="paddle1"> قائمة_المستخدمين_المميزين</div>
+        <div class="paddle2"> <span class="users_name">empty!!</span></div>
+    </div>
+
+    <div class="qux" id="menuToggle">
+        <span class="baz"></span>
+        <span class="baz"></span>
+        <span class="baz"></span>
+    </div>
+
+    <div class="blorpt" id="sidebar">
+        <div class="close-btn" id="closeSidebar"><span class="x">×</span></div> <!-- زر إغلاق الشريط الجانبي -->
+        <ul>
+            <li><a href="login.html">أسأل معلمك</a></li>
+            <li><a href="login.html">الرئيسية</a></li>
+            <li><a href="login.html">غرف الدردشة</a></li>
+            <li><a href="login.html">الفيديوهات التعليمية</a></li>
+            <li><a href="login.html">مكتبة شروحات المعلمين</a></li>
+            <li><a href="login.html">عن صانع الموقع</a></li>
+            <li><a href="login.html">الآلة الحاسبة</a></li>
+            <li><a href="login.html">الألعاب</a></li>
+            <li><a href="login.html">المكتبة</a></li>
+            <li><a href="login.html">غرف دردشة خاصة <img src="vip.png" alt=""></a></li>
+            <li><a href="login.html">المعلم الذكي <img src="vip.png" alt=""></a></li>
+        </ul>
+    </div>
+
+    <!-- Slider with Images -->
+    <div class="slider" id="slider">
+        <img src="1-1329665.png" alt="صورة تعليمية 1" class="slide" style="right: 0;">
+        <img src="images (1).png" alt="صورة تعليمية 2" class="slide">
+        <img src="images.png" alt="صورة تعليمية 3" class="slide">
+        <img src="images.jpeg" alt="صورة تعليمية 3" class="slide">
+        <img src="images2.jpeg" alt="صورة تعليمية 3" class="slide">
+        <img src="images3.jpeg" alt="صورة تعليمية 3" class="slide">
+        <img src="images4.jpeg" alt="صورة تعليمية 3" class="slide">
+        <img src="Untitled.jpeg" alt="صورة تعليمية 3" class="slide">
+        
+        <!-- Left and Right Buttons -->
+        <button class="btn-arrow btn-left" id="prevBtn">&#9664;</button>
+        <button class="btn-arrow btn-right" id="nextBtn">&#9654;</button>
+    </div>
+
+    <div class="content">
+        <a href="login.html" class="btn-login">تسجيل الدخول</a>
+
+        <article>
+            <h2>عن منصة هوم سكولينج</h2>
+            <p>هوم سكولينج هي منصة مبتكرة للتعليم المنزلي، تهدف إلى تزويد الطلاب بتجربة تعليمية مخصصة تناسب احتياجاتهم. يمكنك من خلالها الوصول إلى محتوى تعليمي متنوع وفعال يساعد على التعلم بشكل مريح وفعّال.</p>
+            <p>مع هوم سكولينج، يمكن للآباء متابعة تقدم أطفالهم وتخصيص الجداول الدراسية بما يتناسب مع كل طالب، مع استخدام أدوات تعليمية متقدمة تسهم في تعزيز تجربة التعلم.</p>
+        </article>
+
+        <!-- Social Media Links -->
+        <div class="social-links">
+            <a href="https://www.facebook.com/groups/368084576397379 ">فيسبوك</a>
+            <p id="wordToCopy" hidden>01094626283</p>
+            <button onclick="copyWord()"class="btn-login">رقم مراسلة الواتساب</button>
+        </div>
+    </div>
+
+    <footer>
+        &copy; 2024 منصة هوم سكولينج. جميع الحقوق محفوظة.
+    </footer>
+
+    <script>
+        let slides = document.querySelectorAll('.slide');
+        let currentSlide = 0;
+
+        function showSlide(index) {
+            slides.forEach((slide, i) => {
+                slide.style.right = (i - index) * 100 + '%';
+            });
+        }
+
+        document.getElementById('nextBtn').addEventListener('click', function() {
+            currentSlide = (currentSlide + 1) % slides.length;
+            showSlide(currentSlide);
+        });
+
+        document.getElementById('prevBtn').addEventListener('click', function() {
+            currentSlide = (currentSlide - 1 + slides.length) % slides.length;
+            showSlide(currentSlide);
+        });
+
+        // Initialize slider to show first slide
+        showSlide(currentSlide);
+
+        function copyWord() {
+            // اختيار الكلمة
+            var word = document.getElementById("wordToCopy").innerText;
+
+            // إنشاء عنصر مؤقت لتخزين الكلمة
+            var tempInput = document.createElement("input");
+            tempInput.value = word;
+            document.body.appendChild(tempInput);
+
+            // تحديد ونسخ الكلمة
+            tempInput.select();
+            document.execCommand("copy");
+
+            // إزالة العنصر المؤقت
+            document.body.removeChild(tempInput);
+
+            // رسالة توضيحية
+            alert("تم نسخ رقم مراسلة الواتساب: " + word);
+        }
+
+        document.getElementById('menuToggle').addEventListener('click', function() {
+            const sidebar = document.getElementById('sidebar');
+            sidebar.classList.toggle('active');
+        });
+
+        document.getElementById('closeSidebar').addEventListener('click', function() {
+            const sidebar = document.getElementById('sidebar');
+            sidebar.classList.remove('active');
+        });
+
+    </script>
+</body>
+</html>

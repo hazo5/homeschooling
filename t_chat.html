@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> دردشة المعلمين-هوم سكولينج</title>
+    <link rel="icon" href="الشعر النهائي.png">
+    <style>
+
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            direction: ltr;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+
+        .blorpt {
+            width: 250px;
+            background-color: #333;
+            color: #fff;
+            height: 100vh;
+            position: fixed;
+            top: 0;
+            left: 0;
+            transform: translateX(-250px);
+            transition: transform 0.3s ease;
+            z-index: 1001;
+        }
+
+        .blorpt.active {
+            transform: translateX(0);
+        }
+
+        .blorpt ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .blorpt ul li {
+            margin: 0;
+        }
+
+        .blorpt ul li a {
+            display: block;
+            padding: 15px;
+            text-decoration: none;
+            color: #fff;
+            font-weight: bold;
+        }
+
+        .blorpt ul li a:hover {
+            background-color: #555;
+        }
+
+        .qux {
+            position: fixed;
+            top: 10px;
+            left: 10px;
+            background-color: #333;
+            color: #fff;
+            padding: 10px;
+            cursor: pointer;
+            z-index: 1000;
+            border-radius: 5px;
+        }
+
+        .qux .baz {
+            display: block;
+            width: 25px;
+            height: 3px;
+            background-color: #fff;
+            margin: 5px 0;
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: #ff0000;
+            color: #fff;
+            padding: 10px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        .close-btn:hover {
+            background-color: #cc0000;
+        }
+
+        .chat-container {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding: 20px;
+            margin-left: 260px;
+        }
+
+        .chat-box {
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            flex-grow: 1;
+            overflow-y: auto;
+            direction: rtl;
+        }
+
+        .chat-message {
+            margin-bottom: 15px;
+            display: flex;
+            justify-content: flex-end;
+            direction: rtl;
+        }
+
+        .chat-message .message-content {
+            background-color: #007bff;
+            color: #fff;
+            padding: 10px;
+            border-radius: 8px;
+            max-width: 70%;
+        }
+
+        .message-content .name {
+            font-weight: bold;
+        }
+
+        .message-content .text {
+            margin-top: 5px;
+        }
+
+        .input-container {
+            display: flex;
+            margin-top: 20px;
+        }
+
+        .input-container button {
+            padding: 10px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .input-container button:hover {
+            background-color: #0056b3;
+        }
+
+        .popup-container {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            padding: 20px;
+            z-index: 1002;
+            width: 80%;
+            max-width: 400px;
+        }
+
+        .popup-container.active {
+            display: block;
+        }
+
+        .popup-container input[type="text"] {
+            width: calc(100% - 22px);
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            margin-bottom: 10px;
+        }
+
+        .popup-container button {
+            padding: 10px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .popup-container button:hover {
+            background-color: #0056b3;
+        }
+
+        @media (max-width: 768px) {
+            .blorpt {
+                width: 200px;
+                transform: translateX(-200px);
+            }
+
+            .chat-container {
+                margin-left: 210px;
+                padding: 10px;
+            }
+
+            .qux {
+                top: 5px;
+                left: 5px;
+                padding: 8px;
+            }
+
+            .chat-box {
+                padding: 15px;
+            }
+
+            .message-content {
+                max-width: 85%;
+                padding: 8px;
+            }
+
+            .popup-container {
+                width: 90%;
+                padding: 15px;
+            }
+
+            .popup-container input[type="text"] {
+                width: calc(100% - 22px);
+                padding: 8px;
+            }
+
+            .popup-container button {
+                padding: 8px;
+            }
+
+            .input-container button {
+                padding: 8px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .blorpt {
+                width: 150px;
+                transform: translateX(-150px);
+            }
+
+            .chat-container {
+                margin-left: 160px;
+                padding: 8px;
+                width: 150px;
+            }
+
+            .qux {
+                top: 3px;
+                left: 3px;
+                padding: 6px;
+            }
+
+            .chat-box {
+                padding: 10px;
+            }
+
+            .message-content {
+                max-width: 90%;
+                padding: 6px;
+            }
+
+            .popup-container {
+                width: 95%;
+                padding: 10px;
+            }
+
+            .popup-container input[type="text"] {
+                width: calc(100% - 20px);
+                padding: 6px;
+            }
+
+            .popup-container button {
+                padding: 6px;
+            }
+
+            .input-container button {
+                padding: 6px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="qux" id="menuToggle">
+        <div class="baz"></div>
+        <div class="baz"></div>
+        <div class="baz"></div>
+    </div>
+
+    <div class="blorpt" id="sidebar">
+        <div class="close-btn" id="closeSidebar">×</div> <!-- زر إغلاق الشريط الجانبي -->
+        <ul>
+            <li><a href="login.html">.........أسأل معلمك</a></li>
+            <li><a href="main.html">الرئيسية</a></li>
+            <li><a href="chat.html">غرف الدردشة</a></li>
+            <li><a href="videos.html">الفيديوهات التعليمية</a></li>
+            <li><a href="teachers.html">مكتبة شروحات المعلمين</a></li>
+            <li><a href="web.html">عن صانع الموقع</a></li>
+            <li><a href="calculator.html">الآلة الحاسبة</a></li>
+            <li><a href="grade_calculator.html">الألعاب</a></li>
+            <li><a href="library.html">المكتبة</a></li>
+            <li><a href="vip chat.html">غرف دردشة خاصة <img src="vip.png" alt=""></a></li>
+            <li><a href="vip_login.html">المعلم الذكي <img src="vip.png" alt=""></a></li>
+        </ul>
+    </div>
+
+    <div class="chat-container" 
+    style="position: absolute; right:35%;">
+        <div class="chat-box" id="chatBox">
+            <!-- الرسائل ستظهر هنا -->
+        </div>
+
+        <div class="input-container">
+            <button onclick="showPopup()">كتابة رسالة كمعلم</button>
+        </div>
+    </div>
+
+    <!-- نافذة منبثقة لكتابة الرسائل -->
+    <div class="popup-container" id="popup">
+        <div>
+            <input type="text" id="userName" placeholder="اكتب اسمك...">
+            <input type="text" id="userMessage" placeholder="اكتب رسالتك...">
+            <input type="text" id="code1" placeholder="ادخل الكود الأول ">
+            <input type="text" id="code2" placeholder="ادخل الكود الثاني ">
+            <button onclick="sendMessage()">إرسال</button>
+            <button onclick="closePopup()">إغلاق</button>
+        </div>
+    </div>
+
+    <script>
+        let intervalId;
+
+        function startAutoRefresh() {
+            intervalId = setInterval(function() {
+                location.reload();
+            }, 10000); // تحديث كل 10 ثوانٍ
+        }
+
+        function stopAutoRefresh() {
+            clearInterval(intervalId);
+        }
+
+        function showPopup() {
+            stopAutoRefresh(); // إيقاف التحديث التلقائي عند فتح النافذة المنبثقة
+            document.getElementById('popup').classList.add('active');
+        }
+
+        function closePopup() {
+            document.getElementById('popup').classList.remove('active');
+            startAutoRefresh(); // بدء التحديث التلقائي عند إغلاق النافذة المنبثقة
+        }
+
+        function sendMessage() {
+            var name = document.getElementById('userName').value;
+            var message = document.getElementById('userMessage').value;
+            var code1 = document.getElementById('code1').value;
+            var code2 = document.getElementById('code2').value;
+
+            if (name.trim() === '' || message.trim() === '' || code1 !== 'mo2lem' || code2 !== 'tab2an') {
+                alert('الرجاء إدخال اسمك ورسالتك والكودات بشكل صحيح.');
+                return;
+            }
+
+            var chatBox = document.getElementById('chatBox');
+            var chatMessage = document.createElement('div');
+            chatMessage.className = 'chat-message';
+            chatMessage.innerHTML = '<div class="message-content"><span class="name">' + name + '</span>: <span class="text">' + message + '</span></div>';
+
+            chatBox.appendChild(chatMessage);
+
+            // حفظ الرسائل في LocalStorage
+            saveMessages();
+
+            closePopup();
+            document.getElementById('userName').value = '';
+            document.getElementById('userMessage').value = '';
+            document.getElementById('code1').value = '';
+            document.getElementById('code2').value = '';
+        }
+
+        function saveMessages() {
+            var chatBox = document.getElementById('chatBox');
+            var messages = [];
+            var chatMessages = chatBox.querySelectorAll('.chat-message');
+            chatMessages.forEach(function(chatMessage) {
+                var name = chatMessage.querySelector('.name').innerText;
+                var message = chatMessage.querySelector('.text').innerText;
+                messages.push({ name: name, message: message });
+            });
+            localStorage.setItem('chatMessagesPage2', JSON.stringify(messages)); // مفتاح مختلف هنا
+        }
+        
+        function loadMessages() {
+            var savedMessages = localStorage.getItem('chatMessagesPage2'); // مفتاح مختلف هنا
+            if (savedMessages) {
+                var messages = JSON.parse(savedMessages);
+                var chatBox = document.getElementById('chatBox');
+                messages.forEach(function(msg) {
+                    var chatMessage = document.createElement('div');
+                    chatMessage.className = 'chat-message';
+                    chatMessage.innerHTML = '<div class="message-content"><span class="name">' + msg.name + '</span>: <span class="text">' + msg.message + '</span></div>';
+                    chatBox.appendChild(chatMessage);
+                });
+            }
+        }        
+
+        document.getElementById('menuToggle').addEventListener('click', function() {
+            document.getElementById('sidebar').classList.add('active');
+        });
+
+        document.getElementById('closeSidebar').addEventListener('click', function() {
+            document.getElementById('sidebar').classList.remove('active');
+        });
+
+        window.onload = function() {
+            startAutoRefresh();
+            loadMessages(); // تحميل الرسائل عند تحميل الصفحة
+        };
+    </script>
+</body>
+</html>

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تسجيل الدخول - هوم سكولينج</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="icon" href="الشعر النهائي.png">
+</head>
+<body>
+    <div class="login-container">
+        <h1>تسجيل الدخول</h1>
+        <form id="login-form">
+            <label for="username">اسم المستخدم:</label>
+            <input type="text" id="username" name="username" required>
+            <label for="password">كلمة المرور:</label>
+            <input type="text" id="password" name="password" required>
+            <button type="submit">تسجيل الدخول</button>
+        </form>
+    </div>
+
+    <script>
+        const users = {
+            'ابراهيم كمال': { password: 'B9F4J8K3L7', role: 'student' },
+            'احمد التلب': { password: 'T3Z1Q8X2M6', role: 'student' },
+            'رحيم': { password: 'H4P7N2V9Y3', role: 'student' },
+            'مازن ابو النيل': { password: 'R9C2D8L1F5', role: 'student' },
+            'عمر زعير': { password: 'K7W3G2S9T4', role: 'student' },
+            'عبد الرحمن جمال': { password: 'Q8V1M5R6J2', role: 'student' },
+            'عبد الرحمن محمد فهمي': { password: 'L2N9X3H5P8', role: 'student' },
+            'يوسف عبد العزيز': { password: 'F4J7Z1V9R6', role: 'student' },
+            'ياسين رمضن': { password: 'S8G2M1T5Q9', role: 'student' },
+            'ياسين حاتم': { password: 'M5K9R3L7Y2', role: 'student' },
+            'حاتم عمرو موسى': { password: 'N2W8H4G9C1', role: 'student' },
+            'محمد عبد الله علي': { password: 'Y1L3F9P8T2', role: 'student' },
+            'مازن طلعت': { password: 'V6K2R9M3H4', role: 'student' },
+            'عبد الرحمن عزت': { password: 'X9Q5L2T7J1', role: 'student' },
+            'عزت': { password: 'X9Q5L2T7J1', role: 'student' },
+            'ادم علاء': { password: 'P3N8V4S9L6', role: 'student' },
+            'محمد وليد': { password: 'J1K4G7W9H2', role: 'student' },
+            'طالب اخر 1': { password: 'D9L2M8T5R3', role: 'student' },
+            'طالب اخر 2': { password: 'G7R1S9F2V8', role: 'student' },
+            'طالب اخر 3': { password: 'K2W9J3H6M4', role: 'student' },
+            'طالب اخر 4': { password: 'T8X1L5Q2P9', role: 'student' },
+            'طالب اخر 5': { password: 'V3S9M4G1L7', role: 'student' },
+            'طالب اخر 6': { password: 'Q7H2K9R5F8', role: 'student' },
+            'طالب اخر 7': { password: 'Y9G3N4J6T2', role: 'student' },
+            'معلم عظيم': { password: 'ما اهم العلم', role: 'teacher' },
+            'معلم عظيم': { password: 'ما أهم العلم', role: 'teacher' }
+        };
+        
+        // حدث الاستماع للنموذج
+        document.getElementById('login-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+            
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            
+            if (users[username] && users[username].password === password) {
+                alert(`أهلاً ${username}`);
+                if (users[username].role === 'teacher') {
+                    window.location.href = 't_main.html'; // الانتقال إلى صفحة المعلمين
+                } else {
+                    window.location.href = 'main.html'; // الانتقال إلى صفحة الطلاب
+                }
+            } else {
+                alert('اسم المستخدم أو كلمة المرور غير صحيحة');
+            }
+        });
+        
+        </script>
+</body>
+</html>

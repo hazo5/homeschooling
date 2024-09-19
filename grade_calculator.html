@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>الالعاب-هوم سكولينج</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="الشعر النهائي.png">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #f4f4f4;
+            padding: 20px;
+        }
+        .game-container {
+            margin: auto;
+            max-width: 600px;
+        }
+        h1 {
+            color: #333;
+        }
+        p {
+            color: #555;
+        }
+        .fubar {
+            display: flex;
+            flex-direction: row; /* لجعل العنصر أفقيًا */
+        }
+
+        .blorpt {
+            width: 250px;
+            background-color: #333;
+            color: #fff;
+            height: 100vh; /* ارتفاع 100% من ارتفاع الشاشة */
+            position: fixed;
+            top: 0;
+            left: 0;
+            transform: translateX(-250px); /* إخفاء الشريط الجانبي */
+            transition: transform 0.3s ease;
+            z-index: 1001;
+        }
+
+        .blorpt.active {
+            transform: translateX(0); /* إظهار الشريط الجانبي */
+        }
+
+        .blorpt ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .blorpt ul li {
+            margin: 0;
+        }
+
+        .blorpt ul li a {
+            display: block;
+            padding: 15px;
+            text-decoration: none;
+            color: #fff;
+            font-weight: bold;
+        }
+
+        .blorpt ul li a:hover {
+            background-color: #555;
+        }
+
+        .qux {
+            position: fixed;
+            top: 10px;
+            left: 10px;
+            background-color: #333;
+            color: #fff;
+            padding: 10px;
+            cursor: pointer;
+            z-index: 1000;
+            border-radius: 5px;
+        }
+
+        .qux .baz {
+            display: block;
+            width: 25px;
+            height: 3px;
+            background-color: #fff;
+            margin: 5px 0;
+        }
+        img{
+            height: 20px;
+            width: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="qux" id="menuToggle">
+        <span class="baz"></span>
+        <span class="baz"></span>
+        <span class="baz"></span>
+    </div>
+
+    <div class="blorpt" id="sidebar">
+        <div class="close-btn" id="closeSidebar">×</div> <!-- زر إغلاق الشريط الجانبي -->
+        <ul>
+            <li><a href="login.html">.........أسأل معلمك</a></li>
+            <li><a href="main.html">الرئيسية</a></li>
+            <li><a href="chat.html">غرف الدردشة</a></li>
+            <li><a href="videos.html">الفيديوهات التعليمية</a></li>
+            <li><a href="teachers.html">مكتبة شروحات المعلمين</a></li>
+            <li><a href="web.html">عن صانع الموقع</a></li>
+            <li><a href="calculator.html">الآلة الحاسبة</a></li>
+            <li><a href="grade_calculator.html">الألعاب</a></li>
+            <li><a href="library.html">المكتبة</a></li>
+            <li><a href="vip chat.html">غرف دردشة خاصة <img src="vip.png" alt=""></a></li>
+            <li><a href="vip_login.html">المعلم الذكي <img src="vip.png" alt=""></a></li>
+        </ul>
+    </div>
+    <div class="game-container">
+        <h1>لعبة السلم والثعبان - توفير الطاقة</h1>
+        <p>العب سلم وثعبان مع اصدقائك</p>
+        <iframe src="https://scratch.mit.edu/projects/1051566246/embed" allowtransparency="true" width="485" height="402" frameborder="0" scrolling="no" allowfullscreen></iframe>
+        <p>العب شطرنج وحدك</p>
+        <iframe src="https://scratch.mit.edu/projects/569176/embed" allowtransparency="true" width="485" height="402" frameborder="0" scrolling="no" allowfullscreen></iframe>
+        <p>العب شطرنج مع اصدقائك</p>
+        <iframe src="https://scratch.mit.edu/projects/581990505/embed" allowtransparency="true" width="485" height="402" frameborder="0" scrolling="no" allowfullscreen></iframe>
+    </div>
+    <script>
+        document.getElementById('menuToggle').addEventListener('click', function() {
+            const sidebar = document.getElementById('sidebar');
+            sidebar.classList.toggle('active');
+        });
+
+        document.getElementById('closeSidebar').addEventListener('click', function() {
+            const sidebar = document.getElementById('sidebar');
+            sidebar.classList.remove('active');
+        });
+    </script>
+</body>
+</html>

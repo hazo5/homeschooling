@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>مكتبة القصص-هوم سكولينج</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            overflow-x: hidden; /* لمنع التمرير الأفقي عند فتح الشريط الجانبي */
+        }
+
+        /* تنسيق الهيدر */
+        header {
+            background-color: #27ae60; /* اللون الأخضر للهيدر */
+            color: #fff;
+            padding: 15px 20px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%; /* تأخذ العرض الكامل للهيدر */
+            z-index: 1000;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 1.5em;
+        }
+
+        .header-nav {
+            display: flex;
+            gap: 15px;
+        }
+
+        .header-nav a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: bold;
+            transition: color 0.3s;
+        }
+
+        .header-nav a:hover {
+            color: #dcdcdc;
+        }
+
+        .fubar {
+            display: flex;
+            flex-direction: row;
+            margin-top: 60px; /* لتفادي التداخل مع الهيدر */
+        }
+
+        .blorpt {
+            width: 250px;
+            background-color: #2c3e50;
+            color: #ecf0f1;
+            height: 100vh; /* ارتفاع 100% من ارتفاع الشاشة */
+            position: fixed;
+            top: 0;
+            left: 0;
+            transform: translateX(-250px); /* إخفاء الشريط الجانبي */
+            transition: transform 0.3s ease;
+            z-index: 1001;
+            box-shadow: 2px 0 5px rgba(0, 0, 0, 0.2); /* ظل للشريط الجانبي */
+        }
+
+        .blorpt.active {
+            transform: translateX(0); /* إظهار الشريط الجانبي */
+        }
+
+        .blorpt ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .blorpt ul li {
+            margin: 0;
+        }
+
+        .blorpt ul li a {
+            display: block;
+            padding: 15px;
+            text-decoration: none;
+            color: #ecf0f1;
+            font-weight: bold;
+            transition: background-color 0.3s, padding-left 0.3s; /* تحسين الانتقال */
+        }
+
+        .blorpt ul li a:hover {
+            background-color: #34495e;
+            padding-left: 30px; /* تأثير تحريك على التمرير */
+        }
+
+        .qux {
+            position: fixed;
+            top: 15px;
+            left: 15px;
+            background-color: #2c3e50;
+            color: #ecf0f1;
+            padding: 10px;
+            cursor: pointer;
+            z-index: 1000;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3); /* ظل للأيقونة */
+            transition: background-color 0.3s;
+        }
+
+        .qux:hover {
+            background-color: #34495e; /* تغيير اللون عند التمرير */
+        }
+
+        .qux .baz {
+            display: block;
+            width: 30px;
+            height: 4px;
+            background-color: #ecf0f1;
+            margin: 6px 0;
+            transition: background-color 0.3s; /* تحسين الانتقال */
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background-color: #e74c3c;
+            color: #fff;
+            padding: 10px;
+            cursor: pointer;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3); /* ظل للزر */
+            transition: background-color 0.3s;
+        }
+
+        .close-btn:hover {
+            background-color: #c0392b; /* تغيير اللون عند التمرير */
+        }
+
+        .content {
+            margin-left: 250px; /* لضمان وجود مساحة للشريط الجانبي */
+            padding: 20px;
+            margin-top: 80px; /* تأخذ في الاعتبار ارتفاع الهيدر */
+            background-color: #ffffff;
+            min-height: 100vh; /* ضمان أن يكون محتوى الصفحة على الأقل بارتفاع الشاشة */
+            box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.1); /* ظل خفيف للمحتوى */
+        }
+
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+            font-size: 2em;
+            margin-bottom: 20px;
+        }
+
+        .section {
+            margin-bottom: 20px;
+        }
+
+        .section h2 {
+            color: #2980b9;
+            border-bottom: 2px solid #2980b9;
+            padding-bottom: 10px;
+            margin-bottom: 10px;
+            font-size: 1.5em;
+        }
+
+        .section p {
+            color: #7f8c8d;
+            line-height: 1.6;
+        }
+
+        /* تحسينات للعرض على الهواتف */
+        @media (max-width: 768px) {
+            header {
+                width: 100%; /* عرض كامل للهيدر على الهواتف */
+            }
+
+            .blorpt {
+                width: 100%; /* الشريط الجانبي يأخذ عرض كامل الشاشة على الهواتف */
+                transform: translateX(-100%); /* إخفاء الشريط الجانبي */
+            }
+
+            .blorpt.active {
+                transform: translateX(0); /* إظهار الشريط الجانبي */
+            }
+
+            .content {
+                margin-left: 0; /* إزالة المسافة لتتناسب مع عرض الهاتف */
+            }
+
+            header h1 {
+                font-size: 1.2em; /* تقليل حجم الخط للهيدر */
+            }
+
+            .header-nav {
+                display: none; /* إخفاء قائمة التنقل على الهواتف */
+            }
+
+            .qux {
+                top: 15px;
+                left: 15px;
+                padding: 8px;
+            }
+
+            .qux .baz {
+                width: 25px;
+                height: 3px;
+                margin: 4px 0;
+            }
+
+            .close-btn {
+                top: 15px;
+                right: 15px;
+                padding: 8px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            header h1 {
+                font-size: 1em; /* تقليل حجم الخط للهيدر بشكل أكبر */
+            }
+
+            .blorpt {
+                width: 100%; /* الشريط الجانبي يأخذ عرض كامل الشاشة على الهواتف الصغيرة */
+            }
+
+            .blorpt ul li a {
+                padding: 10px; /* تقليل التباعد في الشريط الجانبي */
+            }
+
+            .qux {
+                padding: 6px;
+            }
+
+            .qux .baz {
+                width: 20px;
+                height: 2px;
+            }
+
+            .close-btn {
+                padding: 6px;
+            }
+        }
+        .h1{
+            position: absolute;
+            left: 7s0px;
+            font-size: x-large;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1 class="h1">مكتبة القصص</h1>
+    </header>
+
+    <div class="qux" id="menuToggle">
+        <span class="baz"></span>
+        <span class="baz"></span>
+        <span class="baz"></span>
+    </div>
+
+    <div class="blorpt" id="sidebar">
+        <div class="close-btn" id="closeSidebar">×</div> <!-- زر إغلاق الشريط الجانبي -->
+        <ul>
+            <li><a href="login.html">.........أسأل معلمك</a></li>
+            <li><a href="main.html">الرئيسية</a></li>
+            <li><a href="chat.html">غرف الدردشة</a></li>
+            <li><a href="videos.html">الفيديوهات التعليمية</a></li>
+            <li><a href="teachers.html">مكتبة شروحات المعلمين</a></li>
+            <li><a href="web.html">عن صانع الموقع</a></li>
+            <li><a href="calculator.html">الآلة الحاسبة</a></li>
+            <li><a href="grade_calculator.html">الألعاب</a></li>
+            <li><a href="library.html">المكتبة</a></li>
+            <li><a href="vip chat.html">غرف دردشة خاصة <img src="vip.png" alt=""></a></li>
+            <li><a href="vip_login.html">المعلم الذكي <img src="vip.png" alt=""></a></li>
+        </ul>
+    </div>
+    <p>the page is empty!!</p>
+
+    <div class="content">
+        <h1 >مكتبة القصص</h1>
+        <p>the page is empty!!</p>
+    <script>
+        document.getElementById('menuToggle').addEventListener('click', function() {
+            const sidebar = document.getElementById('sidebar');
+            sidebar.classList.toggle('active');
+        });
+
+        document.getElementById('closeSidebar').addEventListener('click', function() {
+            const sidebar = document.getElementById('sidebar');
+            sidebar.classList.remove('active');
+        });
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>الرئيسية للمدرسين - هوم سكولينج</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="icon" href="الشعر النهائي.png">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+
+        header {
+            background-color: #40c946;
+            color: #444444;
+            text-align: center;
+            padding: 10px 0;
+        }
+
+        header h1, header h2, header h3 {
+            margin: 5px;
+        }
+
+        .fubar {
+            display: flex;
+            flex-direction: row; /* لجعل العنصر أفقيًا */
+        }
+
+        .blorpt {
+            width: 250px;
+            background-color: #333;
+            color: #fff;
+            height: 100vh; /* ارتفاع 100% من ارتفاع الشاشة */
+            position: fixed;
+            top: 0;
+            left: 0;
+            transform: translateX(-250px); /* إخفاء الشريط الجانبي */
+            transition: transform 0.3s ease;
+            z-index: 1001;
+        }
+
+        .blorpt.active {
+            transform: translateX(0); /* إظهار الشريط الجانبي */
+        }
+
+        .blorpt ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .blorpt ul li {
+            margin: 0;
+        }
+
+        .blorpt ul li a {
+            display: block;
+            padding: 15px;
+            text-decoration: none;
+            color: #fff;
+            font-weight: bold;
+        }
+
+        .blorpt ul li a:hover {
+            background-color: #555;
+        }
+
+        .qux {
+            position: fixed;
+            top: 10px;
+            left: 10px;
+            background-color: #333;
+            color: #fff;
+            padding: 10px;
+            cursor: pointer;
+            z-index: 1000;
+            border-radius: 5px;
+        }
+
+        .qux .baz {
+            display: block;
+            width: 25px;
+            height: 3px;
+            background-color: #fff;
+            margin: 5px 0;
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: #ff0000;
+            color: #fff;
+            padding: 10px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        .close-btn:hover {
+            background-color: #cc0000;
+        }
+
+        main {
+            margin-left: 250px; /* اضبط هذا إذا لزم الأمر */
+            padding: 20px;
+            transition: margin-left 0.3s ease;
+        }
+
+        .banner {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+            padding-top: 50px;
+             /* إضافة حشوة في الأعلى لتجنب التداخل */
+        }
+        .img{
+            height: 300px;
+            width: 500px;
+        }
+
+        .slide img {
+            width: 100%; /* اجعل الصورة تمتد بعرض 100% من العنصر الأب */
+            max-width: 100%; /* إزالة الحد الأقصى للعرض لتتناسب مع عرض الشاشة */
+            height: auto; /* الحفاظ على نسبة العرض إلى الارتفاع */
+            margin: 0 auto; /* توسيط الصورة */
+        }
+
+        footer {
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            padding: 10px 0;
+            position: relative;
+            bottom: 0;
+            width: 100%;
+        }
+
+        @media (max-width: 768px) {
+            .slide img {
+                width: 300px;
+                height: 450px;
+            }
+
+            main {
+                margin-left: 0; /* إعادة تعيين الهامش للمحتوى الرئيسي */
+            }
+        }
+        select {
+            background-color: #4CAF50; /* اللون الأخضر */
+            color: white;
+            padding: 10px;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+
+        select:focus {
+            outline: none;
+        }
+        
+    </style>
+</head>
+<body>
+    <header class="header">
+        <h1>مرحباً بك في الصفحة التعليمية</h1>
+        <h2>هنا تستطيع التعلم والتعرف على معلومات وملفات منهجية ربما لن تجدها بأي منصة أو حتى بأي مدرسة</h2>
+        <select onchange="navigateToPage(this)">
+            <option value="">خصائص المدرسين</option>
+            <option value="vid.html">طريقة رفع فيديو شرح</option>
+            <option value="so2al.html">رفع سؤال كمدرس</option>
+        </select>
+    </header>
+
+    <div class="qux" id="menuToggle">
+        <span class="baz"></span>
+        <span class="baz"></span>
+        <span class="baz"></span>
+    </div>
+
+    <div class="blorpt" id="sidebar">
+        <div class="close-btn" id="closeSidebar">×</div> <!-- زر إغلاق الشريط الجانبي -->
+        <ul>
+            <li><a href="teaching.html">جاوب عن تلميذك</a></li>
+            <li><a href="main.html">الرئيسية</a></li>
+            <li><a href="chat.html">غرف الدردشة</a></li>
+            <li><a href="videos.html">الفيديوهات التعليمية</a></li>
+            <li><a href="teachers.html">مكتبة شروحات المعلمين</a></li>
+            <li><a href="web(1).html">عن صانع الموقع</a></li>
+            <li><a href="calculator.html">الآلة الحاسبة</a></li>
+            <li><a href="grade_calculator.html">الألعاب</a></li>
+            <li><a href="library.html">المكتبة</a></li>
+        </ul>
+    </div>
+
+    <main>
+        <section id="banner" class="banner">
+            <div class="slide">
+                <img class="img" src="الشعار النهائي المعرض.png" alt="صورة 1">
+            </div>
+            <div class="slide">
+                <img class="img" src="images (1).png" alt="صورة 2">
+            </div>
+            <div class="slide">
+                <img class="img" src="images.png" alt="صورة 3">
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>حقوق الطبع والنشر © 2024 صفحة تعليمية للصف السادس</p>
+    </footer>
+
+    <script>
+        document.getElementById('menuToggle').addEventListener('click', function() {
+            const sidebar = document.getElementById('sidebar');
+            sidebar.classList.toggle('active');
+        });
+
+        document.getElementById('closeSidebar').addEventListener('click', function() {
+            const sidebar = document.getElementById('sidebar');
+            sidebar.classList.remove('active');
+        });
+        function navigateToPage(select) {
+            const page = select.value;
+            if (page) {
+                window.location.href = page;
+            }
+        }
+    </script>
+</body>
+</html>

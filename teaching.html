@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>جاوب على تلميذك-هوم سكولينج</title>
+    <link rel="icon" href="الشعار النهائي .png">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            direction: rtl;
+            text-align: right;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+        }
+        #teacher-section {
+            flex: 1;
+            overflow-y: auto;
+            margin: 20px;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            position: relative;
+            padding-bottom: 60px; /* Space for the fixed input area */
+        }
+        .fixed-bottom {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background-color: #fff;
+            padding: 10px;
+            box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+            gap: 10px; /* Space between input elements */
+        }
+        textarea, button {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        button {
+            background-color: #28a745;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #218838;
+        }
+        .question, .answer {
+            background-color: #e9ecef;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+        }
+        .question .name, .answer .name {
+            font-weight: bold;
+        }
+        .answer {
+            background-color: #d4edda;
+        }
+        .question, .answer {
+            margin-bottom: 10px; /* Margin to push content away from the fixed input area */
+        }
+        .sidebar {
+            width: 200px;
+            background-color: #333;
+            color: white;
+            padding: 20px;
+            height: 100vh;
+            position: sticky;
+            top: 0;
+        }
+
+    </style>
+</head>
+<body>
+    
+    <div id="teacher-section">
+        <div id="questions-for-teachers"></div>
+    </div>
+    <a href="t_main.html">
+        <button class="button">
+            أضغط للذهاب للصفحة الرئيسية
+        </button>
+    </a>
+    <script>
+        function loadQuestionsForTeachers() {
+            const questions = JSON.parse(localStorage.getItem('questions')) || [];
+            const questionsContainer = document.getElementById('questions-for-teachers');
+
+            questionsContainer.innerHTML = '';
+            questions.forEach((question, index) => {
+                const questionDiv = document.createElement('div');
+                questionDiv.className = 'question';
+                questionDiv.id = `question-${index}`;
+                questionDiv.innerHTML = `<p class="name">${question.name}</p><p>${question.question}</p>`;
+
+                question.answers.forEach(answer => {
+                    const answerDiv = document.createElement('div');
+                    answerDiv.className = 'answer';
+                    answerDiv.innerHTML = `<p class="name">رد المعلم:</p><p>${answer}</p>`;
+                    questionDiv.appendChild(answerDiv);
+                });
+
+                const answerInput = document.createElement('textarea');
+                answerInput.placeholder = 'اكتب ردك هنا';
+
+                const answerButton = document.createElement('button');
+                answerButton.textContent = 'إرسال';
+                answerButton.onclick = function() {
+                    const answerText = answerInput.value;
+                    if (answerText) {
+                        questions[index].answers.push(answerText);
+                        localStorage.setItem('questions', JSON.stringify(questions));
+                        loadQuestionsForTeachers();
+                        answerInput.value = '';
+                    } else {
+                        alert('يرجى كتابة الرد');
+                    }
+                };
+
+                questionDiv.appendChild(answerInput);
+                questionDiv.appendChild(answerButton);
+                questionsContainer.appendChild(questionDiv);
+            });
+
+            adjustScrollPosition();
+        }
+
+        function adjustScrollPosition() {
+            const teacherSection = document.getElementById('teacher-section');
+            const sectionHeight = teacherSection.clientHeight;
+            const scrollHeight = teacherSection.scrollHeight;
+
+            if (scrollHeight > sectionHeight) {
+                const scrollTo = Math.max(scrollHeight - sectionHeight * 0.8, 0);
+                teacherSection.scrollTop = scrollTo;
+            }
+        }
+
+        function postAnswer() {
+            const answerText = document.getElementById('answer').value;
+            const questionId = document.querySelector('.question.active').id.split('-')[1];
+            const questions = JSON.parse(localStorage.getItem('questions')) || [];
+
+            if (answerText && questionId !== undefined) {
+                questions[questionId].answers.push(answerText);
+                localStorage.setItem('questions', JSON.stringify(questions));
+                loadQuestionsForTeachers();
+                document.getElementById('answer').value = '';
+            } else {
+                alert('يرجى كتابة الرد واختيار السؤال');
+            }
+        }
+
+        loadQuestionsForTeachers();
+
+        // تحديث تلقائي للأسئلة كل 10 ثوانٍ
+        setInterval(loadQuestionsForTeachers, 10000);
+    </script>
+</body>
+</html>

@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>عرض الرسائل المخزنة</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+            direction: rtl;
+            text-align: right;
+        }
+
+        h2 {
+            color: #333;
+        }
+
+        .message-box {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            max-width: 400px;
+            margin: auto;
+            margin-top: 20px;
+        }
+
+        p {
+            color: #555;
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+    <h2>الرسائل المخزنة</h2>
+    <div id="messageBox" class="message-box">
+        <!-- سيتم عرض الرسائل هنا -->
+    </div>
+
+    <script>
+        function displayStoredData() {
+            const storedData = localStorage.getItem('quizData');
+            if (storedData) {
+                const quizData = JSON.parse(storedData);
+                const messageBox = document.getElementById('messageBox');
+                messageBox.innerHTML = `
+                    <p><strong>السؤال:</strong> ${quizData.question}</p>
+                    <p><strong>الإجابة الأولى:</strong> ${quizData.answer1}</p>
+                    <p><strong>الإجابة الثانية:</strong> ${quizData.answer2}</p>
+                    <p><strong>الإجابة الثالثة:</strong> ${quizData.answer3}</p>
+                    <p><strong>الإجابة الصحيحة:</strong> ${quizData.correctAnswer}</p>
+                `;
+            } else {
+                document.getElementById('messageBox').innerHTML = '<p>لا توجد رسائل مخزنة.</p>';
+            }
+        }
+
+        // عرض البيانات عند تحميل الصفحة
+        window.onload = displayStoredData;
+    </script>
+</body>
+</html>

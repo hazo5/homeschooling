@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>اسأل معلمك-هوم سكولينج</title>
+    <link rel="icon" href="الشعر النهائي.png">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            direction: rtl;
+            text-align: right;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+        }
+        #student-section {
+            flex: 1;
+            overflow-y: auto;
+            margin: 20px;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            position: relative;
+            padding-bottom: 60px; /* Space for the fixed input area */
+        }
+        .fixed-bottom {
+            position: fixed;
+            bottom: 0; /* Stick to the bottom of the page */
+            left: 0;
+            width: 100%;
+            background-color: #fff;
+            box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: row;
+            gap: 10px; /* Space between input elements */
+            box-sizing: border-box;
+            height: 30px; /* Fixed height for the bottom section */
+            align-items: center; /* Center items vertically */
+            padding: 0 10px; /* Padding for left and right */
+        }
+        input, textarea, button {
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+            height: 30px; /* Set the height to 30px */
+        }
+        input, button {
+            width: 20%; /* Adjust width to fit within padding */
+            padding: 0 5px; /* Adjust padding to fit the smaller height */
+            font-size: 12px; /* Adjust font size to fit smaller height */
+        }
+        textarea {
+            width: 60%; /* Adjust width to fit within padding */
+            height: 30px; /* Set the height to 30px */
+            padding: 5px;
+            font-size: 12px; /* Adjust font size to fit smaller height */
+            resize: none; /* Prevent resizing */
+            overflow-y: auto; /* Allow vertical scrolling if needed */
+        }
+        button {
+            background-color: #28a745;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+            line-height: 30px; /* Align text vertically */
+            text-align: center;
+        }
+        button:hover {
+            background-color: #218838;
+        }
+        .question, .answer {
+            background-color: #e9ecef;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+        }
+        .question .name, .answer .name {
+            font-weight: bold;
+        }
+        .answer {
+            background-color: #d4edda;
+        }
+        .question, .answer {
+            margin-bottom: 10px; /* Margin to push content away from the fixed input area */
+        }
+    </style>
+</head>
+<body><a href="main.html">
+        <button class="button">
+            أضغط للذهاب للصفحة الرئيسية
+        </button>
+    </a>
+    <div id="student-section">
+        <div id="questions"></div>
+    </div>
+    
+    <div class="fixed-bottom">
+        <input type="text" id="question-name" placeholder="اسمك">
+        <textarea id="question" placeholder="اكتب سؤالك هنا"></textarea>
+        <button onclick="postQuestion()">إرسال</button>
+    </div>
+    <script>
+        function loadQuestions() {
+            const questions = JSON.parse(localStorage.getItem('questions')) || [];
+            const questionsContainer = document.getElementById('questions');
+
+            questionsContainer.innerHTML = '';
+            questions.forEach((question, index) => {
+                const questionDiv = document.createElement('div');
+                questionDiv.className = 'question';
+                questionDiv.id = `question-${index}`;
+                questionDiv.innerHTML = `<p class="name">${question.name}</p><p>${question.question}</p>`;
+
+                question.answers.forEach(answer => {
+                    const answerDiv = document.createElement('div');
+                    answerDiv.className = 'answer';
+                    answerDiv.innerHTML = `<p class="name">رد المعلم:</p><p>${answer}</p>`;
+                    questionDiv.appendChild(answerDiv);
+                });
+
+                questionsContainer.appendChild(questionDiv);
+            });
+
+            adjustScrollPosition();
+        }
+
+        function adjustScrollPosition() {
+            const studentSection = document.getElementById('student-section');
+            const sectionHeight = studentSection.clientHeight;
+            const scrollHeight = studentSection.scrollHeight;
+
+            if (scrollHeight > sectionHeight) {
+                const scrollTo = Math.max(scrollHeight - sectionHeight * 0.8, 0);
+                studentSection.scrollTop = scrollTo;
+            }
+        }
+
+        function postQuestion() {
+            const name = document.getElementById('question-name').value;
+            const question = document.getElementById('question').value;
+
+            if (name && question) {
+                const questions = JSON.parse(localStorage.getItem('questions')) || [];
+                questions.push({ name, question, answers: [] });
+                localStorage.setItem('questions', JSON.stringify(questions));
+
+                document.getElementById('question-name').value = '';
+                document.getElementById('question').value = '';
+                loadQuestions();
+            } else {
+                alert('يرجى كتابة الاسم والسؤال');
+            }
+        }
+
+        function checkNewAnswers() {
+            const questions = JSON.parse(localStorage.getItem('questions')) || [];
+            const lastCheck = JSON.parse(localStorage.getItem('lastCheck')) || {};
+            let hasNewAnswer = false;
+
+            questions.forEach((question, index) => {
+                if (lastCheck[index] && question.answers.length > lastCheck[index]) {
+                    if (question.name === localStorage.getItem('username')) {
+                        hasNewAnswer = true;
+                    }
+                }
+                lastCheck[index] = question.answers.length;
+            });
+
+            localStorage.setItem('lastCheck', JSON.stringify(lastCheck));
+
+            if (hasNewAnswer) {
+                alert(`تم الرد على سؤالك يا ${localStorage.getItem('username')}`);
+            }
+        }
+
+        loadQuestions();
+
+        // تحديث تلقائي للأسئلة كل 10 ثوانٍ
+        setInterval(() => {
+            loadQuestions();
+            checkNewAnswers();
+        }, 10000);
+    </script>
+</body>
+</html>

@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>كيف ضنيف فيديو كشرح بمكتبة شروحات المعلمين؟</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            direction: rtl;
+            text-align: right;
+            margin: 20px;
+        }
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            max-width: 800px;
+            margin: auto;
+        }
+        .step {
+            position: relative;
+            margin-bottom: 20px;
+            border: 2px solid #000;
+            padding: 10px;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+        }
+        .step img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            margin-bottom: 10px;
+        }
+        .step p {
+            margin: 0;
+        }
+        .red {
+            color: red;
+            font-weight: bold;
+        }
+        .arrow {
+            position: absolute;
+            background-color: red;
+            width: 100px;
+            height: 3px;
+        }
+        .arrow::before {
+            content: "";
+            position: absolute;
+            top: -5px;
+            right: -10px;
+            border-width: 10px;
+            border-style: solid;
+            border-color: transparent transparent transparent red;
+        }
+        /* Arrow positions based on the image */
+        .step-2 .arrow {
+            top: 60px;
+            right: 180px;
+            transform: rotate(0deg);
+            width: 60px;
+        }
+        .step-3 .arrow {
+            top: 20px;
+            right: 180px;
+            transform: rotate(0deg);
+            width: 60px;
+        }
+        .step-4 .arrow {
+            top: 40px;
+            right: 20px;
+            transform: rotate(90deg);
+            width: 150px;
+        }
+        .step-5 .arrow {
+            top: 40px;
+            right: 40px;
+            transform: rotate(90deg);
+            width: 150px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>كيف تضيف فيديو كشرح بمكتبة شروحات المعلمين؟</h1>
+
+    <div class="step step-1">
+        <p>1. تدخل صفحة  
+            <a href="web.html"><span class="red">عن صناع الموقع</span></p></a>
+        <img src="صناع الموقع.png" alt="صفحة عن صناع الموقع">
+    </div>
+
+    <div class="step step-2">
+        <p>2. اضغط هنا</p>
+        <img src="فيس (1).png" alt="اضغط هنا"
+        style="height: 30px; width: 30px;">
+    </div>
+
+    <div class="step step-3">
+        <p>3. ستفتح هذه النافذة</p>
+        <img src="الفيس.jpg" alt="ستفتح هذه النافذة">
+    </div>
+
+    <div class="step step-4">
+        <p>4. اضغط على مراسلة</p>
+    </div>
+
+    <div class="step step-5">
+        <p>5. أرسل هنا الفيديو</p>
+        <img src="المراسلة.png" alt="أرسل هذا الفيديو">
+    </div>
+</div>
+
+</body>
+</html>
